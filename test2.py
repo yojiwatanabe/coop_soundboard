@@ -36,7 +36,7 @@ class Example(QWidget):
         temp = btn1.sizeHint()
         btn1.resize(temp)
         temp.setHeight(temp.width())
-        btn1.setIcon(QIcon('airhorn.jpg'))
+        btn1.setIcon(QIcon('dependencies/airhorn.jpg'))
         btn1.setIconSize(temp)
         btn1.clicked.connect(self.Play)
         mainGrid.addWidget(btn1, 0, 0)
@@ -46,7 +46,7 @@ class Example(QWidget):
         temp = btn2.sizeHint()
         btn2.resize(temp)
         temp.setHeight(temp.width())
-        btn2.setIcon(QIcon('foghorn.jpg'))
+        btn2.setIcon(QIcon('dependencies/foghorn.jpg'))
         btn2.setIconSize(temp)
         btn2.clicked.connect(self.Play2)
         mainGrid.addWidget(btn2, 0, 1)
@@ -56,7 +56,7 @@ class Example(QWidget):
         temp = btn3.sizeHint()
         btn3.resize(temp)
         temp.setHeight(temp.width())
-        btn3.setIcon(QIcon('pirate.jpg'))
+        btn3.setIcon(QIcon('dependencies/pirate.jpg'))
         btn3.setIconSize(temp)
         btn3.clicked.connect(self.Play3)
         mainGrid.addWidget(btn3, 1, 0)
@@ -65,7 +65,7 @@ class Example(QWidget):
         btn4.setShortcut('Down')
         temp = btn4.sizeHint()
         temp.setHeight(temp.width())
-        btn4.setIcon(QIcon('yell.jpg'))
+        btn4.setIcon(QIcon('dependencies/yell.jpg'))
         btn4.setIconSize(temp)
         btn4.clicked.connect(self.Play4)
         mainGrid.addWidget(btn4, 1, 1)
@@ -78,19 +78,19 @@ class Example(QWidget):
 
         
     def Play(self):
-        QSound.play("airhorn.wav")
+        QSound.play("dependencies/airhorn.wav")
         self.changeBackground()
 
     def Play2(self):
-        QSound.play("foghorn.wav")
+        QSound.play("dependencies/foghorn.wav")
         self.changeBackground()
 
     def Play3(self):
-        QSound.play("pirate.wav")
+        QSound.play("dependencies/pirate.wav")
         self.changeBackground()
 
     def Play4(self):
-        QSound.play("ahh.wav")
+        QSound.play("dependencies/ahh.wav")
         self.changeBackground()
 
     def changeBackground(self):
