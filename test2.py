@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets    import QWidget, QLabel, QPushButton, QApplication, QGridLayout, QVBoxLayout
+from PyQt5.QtWidgets    import QWidget, QLabel, QPushButton, QApplication, QGridLayout, QVBoxLayout, QHBoxLayout
 from PyQt5.QtGui        import QFont, QIcon, QPixmap
 from PyQt5.QtMultimedia import QSound
 from PyQt5.QtCore       import QCoreApplication, QSize, Qt
@@ -15,68 +15,77 @@ class Example(QWidget):
         
     def initUI(self):
         window   = QVBoxLayout()
-        mainGrid = QGridLayout()
+
         self.setLayout(window)
         self.setWindowTitle('COOP SOUNDS')
+        self.initTitle(window)
+        self.initSoundGrid(window)
+        self.initOptions(window)
 
-        title = QLabel()
-        title.setPixmap(QPixmap('title.png'))
+        self.show()
+
+    def initTitle(self, window):
+        titleImage  = QPixmap('dependencies/title.png')
+        title       = QLabel()
+        title.setPixmap(titleImage.scaledToWidth(800))
         title.setAlignment(Qt.AlignCenter)
+        window.addWidget(title)
 
-        title.setFont(QFont("Futura", 40, QFont.Bold))
 
-        btn = QPushButton('X', self)
-        btn.setShortcut('Space')
-        btn.resize(30, 30)
-        btn.move(10, 10)
-        btn.clicked.connect(QCoreApplication.instance().quit)
+    def initSoundGrid(self, window):
+        soundGrid   = QGridLayout()
 
-        btn1 = QPushButton('OOOP', self)
+        btn1    = QPushButton('OOOP', self)
+        temp    = btn1.sizeHint()
         btn1.setShortcut('Left')
-        temp = btn1.sizeHint()
         btn1.resize(temp)
         temp.setHeight(temp.width())
         btn1.setIcon(QIcon('dependencies/airhorn.jpg'))
         btn1.setIconSize(temp)
         btn1.clicked.connect(self.Play)
-        mainGrid.addWidget(btn1, 0, 0)
+        soundGrid.addWidget(btn1, 0, 0)
 
-        btn2 = QPushButton('SOUP', self)
+        btn2    = QPushButton('SOUP', self)
+        temp    = btn2.sizeHint()
         btn2.setShortcut('Up')
-        temp = btn2.sizeHint()
         btn2.resize(temp)
         temp.setHeight(temp.width())
         btn2.setIcon(QIcon('dependencies/foghorn.jpg'))
         btn2.setIconSize(temp)
         btn2.clicked.connect(self.Play2)
-        mainGrid.addWidget(btn2, 0, 1)
+        soundGrid.addWidget(btn2, 0, 1)
 
-        btn3 = QPushButton('FOOP', self)
+        btn3    = QPushButton('FOOP', self)
+        temp    = btn3.sizeHint()
         btn3.setShortcut('Right')
-        temp = btn3.sizeHint()
         btn3.resize(temp)
         temp.setHeight(temp.width())
         btn3.setIcon(QIcon('dependencies/pirate.jpg'))
         btn3.setIconSize(temp)
         btn3.clicked.connect(self.Play3)
-        mainGrid.addWidget(btn3, 1, 0)
+        soundGrid.addWidget(btn3, 1, 0)
 
-        btn4 = QPushButton('GOOP', self)
+        btn4    = QPushButton('GOOP', self)
+        temp    = btn4.sizeHint()
         btn4.setShortcut('Down')
-        temp = btn4.sizeHint()
         temp.setHeight(temp.width())
         btn4.setIcon(QIcon('dependencies/yell.jpg'))
         btn4.setIconSize(temp)
         btn4.clicked.connect(self.Play4)
-        mainGrid.addWidget(btn4, 1, 1)
+        soundGrid.addWidget(btn4, 1, 1)
 
-        window.addWidget(title)
-        window.addLayout(mainGrid)
-        window.addWidget(btn)
+        window.addLayout(soundGrid)
 
-        self.show()
+    def initOptions(self, window):
+        optionsBox = QHBoxLayout()
 
-        
+        exitButton = QPushButton('X', self)
+        exitButton.setShortcut('Space')
+        exitButton.clicked.connect(QCoreApplication.instance().quit)
+
+        optionsBox.addWidget(exitButton)
+        window.addLayout(optionsBox)
+
     def Play(self):
         QSound.play("dependencies/airhorn.wav")
         self.changeBackground()
