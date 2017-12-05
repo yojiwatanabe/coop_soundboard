@@ -18,7 +18,7 @@ _Coop Sounds_ is a small application that allows users to play pre-selected soun
 
 **Planned Features:**
 * Play a backing track
-	* Pre-selected
+	* Pre-selected (IMPLEMENTED 12/5/17)
 	* Load-in
 * Edit soundboard
 	* Make your own with user-selected sounds
