@@ -1,7 +1,27 @@
-import sys
-from PyQt5.QtWidgets    import QWidget, QLabel, QPushButton, QApplication, QGridLayout, QVBoxLayout, QHBoxLayout
+"""
+COOP SOUNDS
+Yoji Watanabe - Fall 2017
+
+test2.py - Coop Sounds Implementation
+
+Working on:
+- Starting/stopping backing track
+- Changing background color between sounds
+"""
+
+
+
+# -*- coding: utf-8 -*-
+
+import sys, math
+import os
+import random
+import glob
+from os import system
+from PyQt5.QtWidgets    import QWidget, QLabel, QPushButton, QApplication, QGridLayout, QVBoxLayout, QHBoxLayout, QInputDialog, QLineEdit
 from PyQt5.QtGui        import QFont, QIcon, QPixmap
 from PyQt5.QtMultimedia import QSound
+from PyQt5.QtCore       import QCoreApplication, QSize, Qt
 from PyQt5.QtCore       import QCoreApplication, QSize, Qt
 
 
@@ -9,18 +29,15 @@ class Example(QWidget):
 
     def __init__(self):
         super(Example, self).__init__()
-        
         self.initUI()
         
-        
     def initUI(self):
-        window   = QVBoxLayout()
-
+        window = QVBoxLayout()
         self.setLayout(window)
         self.setWindowTitle('COOP SOUNDS')
+
         self.initTitle(window)
         self.initSoundGrid(window)
-        self.initOptions(window)
 
         self.show()
 
@@ -75,15 +92,34 @@ class Example(QWidget):
         soundGrid.addWidget(btn4, 1, 1)
 
         window.addLayout(soundGrid)
+        self.initOptions(window, soundGrid)
 
-    def initOptions(self, window):
+    def initOptions(self, window, soundGrid):
         optionsBox = QHBoxLayout()
 
-        exitButton = QPushButton('X', self)
+        exitButton          = QPushButton('X', self)
         exitButton.setShortcut('Space')
         exitButton.clicked.connect(QCoreApplication.instance().quit)
+        
+        backingOptions = QHBoxLayout()
+        backing = QSound("dependencies/backing.wav")
+        startBackingTrack   = QPushButton('Play', self)
+        startBackingTrack.setShortcut('a')
+        startBackingTrack.clicked.connect(lambda: self.playBacking(backing))
+        backingOptions.addWidget(startBackingTrack)
+
+        stopBackingTrack   = QPushButton('Stop', self)
+        stopBackingTrack.setShortcut('a')
+        stopBackingTrack.clicked.connect(lambda: self.stopBacking(backing))
+        backingOptions.addWidget(stopBackingTrack)
+
+        addButtonButton = QPushButton('+', self)
+        addButtonButton.setShortcut('+')
+        addButtonButton.clicked.connect(lambda: self.addButton(soundGrid))
 
         optionsBox.addWidget(exitButton)
+        optionsBox.addWidget(addButtonButton)
+        optionsBox.addLayout(backingOptions)
         window.addLayout(optionsBox)
 
     def Play(self):
@@ -102,8 +138,39 @@ class Example(QWidget):
         QSound.play("dependencies/ahh.wav")
         self.changeBackground()
 
+    def PlayCustom(self, path):
+        QSound.play("dependencies/" + path)
+
+        # Add a new button to the soundboard
+    def addButton(self, soundGrid):
+        text, okPressed = QInputDialog.getText(self, "Get text","Word:", QLineEdit.Normal, "")
+        newButton       = QPushButton(text)
+        soundGrid.addWidget(newButton)
+
+        self.setRandomPic(newButton)
+
+        # Change color of background each time 
     def changeBackground(self):
         print 'try'
+
+    def playBacking(self, backing):
+        backing.play()
+
+    def stopBacking(self, backing):
+        backing.stop()
+
+    def setRandomPic(self, button):
+        files = glob.glob("customImages/*.jpg")
+        filename = files[int(math.floor(random.random() * len(files)))]
+        button.setIcon(QIcon(filename))
+        temp            = button.sizeHint()
+        temp.setHeight(temp.width())
+        button.setIconSize(temp)
+
+
+    # def stopBacking(self, *QSound):
+        # QSound.stop("dependencies/backing.wav")
+        # QSound.stop()
 
 
 if __name__ == '__main__':
