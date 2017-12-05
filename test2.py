@@ -91,6 +91,17 @@ class Example(QWidget):
         btn4.clicked.connect(self.Play4)
         soundGrid.addWidget(btn4, 1, 1)
 
+        btn1.clicked.connect(lambda: self.changeBackground(btn1))
+        btn2.clicked.connect(lambda: self.changeBackground(btn2))
+        btn3.clicked.connect(lambda: self.changeBackground(btn3))
+        btn4.clicked.connect(lambda: self.changeBackground(btn4))
+
+        btn1.setStyleSheet('background-color:#FFFFFF;color:#000000;')
+        btn2.setStyleSheet('background-color:#FFFFFF;color:#000000;')
+        btn3.setStyleSheet('background-color:#FFFFFF;color:#000000;')
+        btn4.setStyleSheet('background-color:#FFFFFF;color:#000000;')
+
+
         window.addLayout(soundGrid)
         self.initOptions(window, soundGrid)
 
@@ -124,19 +135,15 @@ class Example(QWidget):
 
     def Play(self):
         QSound.play("dependencies/airhorn.wav")
-        self.changeBackground()
 
     def Play2(self):
         QSound.play("dependencies/foghorn.wav")
-        self.changeBackground()
 
     def Play3(self):
         QSound.play("dependencies/pirate.wav")
-        self.changeBackground()
 
     def Play4(self):
         QSound.play("dependencies/ahh.wav")
-        self.changeBackground()
 
     def PlayCustom(self, path):
         QSound.play("dependencies/" + path)
@@ -150,8 +157,10 @@ class Example(QWidget):
         self.setRandomPic(newButton)
 
         # Change color of background each time 
-    def changeBackground(self):
-        print 'try'
+    def changeBackground(self, button):
+        r = lambda: random.randint(0,255)
+        randColor = '#%02X%02X%02X' % (r(),r(),r())
+        button.setStyleSheet('background-color:' + randColor +';color:#000000;')
 
     def playBacking(self, backing):
         backing.play()
