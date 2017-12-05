@@ -12,6 +12,9 @@ _Coop Sounds_ is a small application that allows users to play pre-selected soun
 * Hotkeys:
 	* Use arrow keys to play sounds
 	* Use the spacebar to 
+* Backing track:
+	* Play and stop playing a backing track
+	* Jam with a smooth jazz band
 
 **Planned Features:**
 * Play a backing track
