@@ -5,7 +5,6 @@ Yoji Watanabe - Fall 2017
 test2.py - Coop Sounds Implementation
 
 Working on:
-- Starting/stopping backing track
 - Changing background color between sounds
 """
 
@@ -13,11 +12,8 @@ Working on:
 
 # -*- coding: utf-8 -*-
 
-import sys, math
-import os
-import random
-import glob
-from os import system
+import sys, math, os, random, glob
+from os                 import system
 from PyQt5.QtWidgets    import QWidget, QLabel, QPushButton, QApplication, QGridLayout, QVBoxLayout, QHBoxLayout, QInputDialog, QLineEdit
 from PyQt5.QtGui        import QFont, QIcon, QPixmap
 from PyQt5.QtMultimedia import QSound
@@ -145,15 +141,21 @@ class Example(QWidget):
     def Play4(self):
         QSound.play("dependencies/ahh.wav")
 
-    def PlayCustom(self, path):
-        QSound.play("dependencies/" + path)
+    def playCustom(self, text):
+        os.system("say " + text)
+        pass
 
         # Add a new button to the soundboard
     def addButton(self, soundGrid):
         text, okPressed = QInputDialog.getText(self, "Get text","Word:", QLineEdit.Normal, "")
         newButton       = QPushButton(text)
+        temp            = newButton.sizeHint()
+        temp.setHeight(temp.width())
+        newButton.setIconSize(temp)
+        newButton.clicked.connect(lambda: self.playCustom(text))
+        newButton.clicked.connect(lambda: self.changeBackground(newButton))
+        newButton.setStyleSheet('background-color:#FFFFFF;color:#000000;')
         soundGrid.addWidget(newButton)
-
         self.setRandomPic(newButton)
 
         # Change color of background each time 
@@ -175,7 +177,6 @@ class Example(QWidget):
         temp            = button.sizeHint()
         temp.setHeight(temp.width())
         button.setIconSize(temp)
-
 
     # def stopBacking(self, *QSound):
         # QSound.stop("dependencies/backing.wav")
